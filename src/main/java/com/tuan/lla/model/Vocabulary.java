@@ -10,6 +10,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -19,7 +20,7 @@ public class Vocabulary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private UUID id;
 
     @Size(max = 100)
     @NotNull
@@ -31,10 +32,6 @@ public class Vocabulary {
     @Column(name = "word_type", nullable = false, length = 20)
     private String wordType;
 
-    @NotNull
-    @Column(name = "definition", nullable = false, length = Integer.MAX_VALUE)
-    private String definition;
-
     @Column(name = "sample_sentence", length = Integer.MAX_VALUE)
     private String sampleSentence;
 
@@ -44,10 +41,9 @@ public class Vocabulary {
     @Column(name = "audio_url", length = Integer.MAX_VALUE)
     private String audioUrl;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "topic_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JoinColumn(name = "topic_id")
     private Topic topic;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
@@ -57,6 +53,14 @@ public class Vocabulary {
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "updated_at")
     private Instant updatedAt;
+
+    @Size(max = 10)
+    @Column(name = "level", length = 10)
+    private String level;
+
+    @Size(max = 255)
+    @Column(name = "pronunciation")
+    private String pronunciation;
 
 
 }

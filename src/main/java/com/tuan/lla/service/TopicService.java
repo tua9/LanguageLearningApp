@@ -4,18 +4,19 @@ import com.tuan.lla.dto.request.TopicRequest;
 import com.tuan.lla.dto.response.TopicResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface TopicService {
 
     List<TopicResponse> getAll();
 
-    List<TopicResponse> getAllByUserId(Long userId);
+    List<TopicResponse> getAllByUserId(UUID userId);
 
-    TopicResponse getById(Long id);
+    TopicResponse getById(UUID id);
 
     TopicResponse create(TopicRequest request);
 
-    TopicResponse update(Long id, TopicRequest request);
+    TopicResponse update(UUID id, TopicRequest request);
 
-    void delete(Long id);
+    void delete(UUID id);
 }

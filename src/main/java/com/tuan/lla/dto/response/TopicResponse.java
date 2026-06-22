@@ -5,16 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Getter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TopicResponse {
 
-    private Long id;
+    private UUID id;
     private String title;
     private String description;
-    private Long userId;
+    private UUID userId;
     private String userFullName;
     private Instant createdAt;
     private Instant updatedAt;

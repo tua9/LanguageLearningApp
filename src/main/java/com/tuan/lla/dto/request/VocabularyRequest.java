@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 public class VocabularyRequest {
@@ -27,5 +29,5 @@ public class VocabularyRequest {
     private String audioUrl;
 
     @NotNull(message = "Topic ID is required")
-    private Long topicId;
+    private UUID topicId;
 }

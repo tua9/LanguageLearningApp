@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +36,7 @@ public class VocabularyServiceImpl implements VocabularyService {
     }
 
     @Override
-    public List<VocabularyResponse> getAllByTopicId(Long topicId) {
+    public List<VocabularyResponse> getAllByTopicId(UUID topicId) {
         if (!topicRepository.existsById(topicId)) {
             throw new ResourceNotFoundException("Topic", "id", topicId);
         }
@@ -46,7 +47,7 @@ public class VocabularyServiceImpl implements VocabularyService {
     }
 
     @Override
-    public VocabularyResponse getById(Long id) {
+    public VocabularyResponse getById(UUID id) {
         Vocabulary vocabulary = vocabularyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vocabulary", "id", id));
         return toResponse(vocabulary);
@@ -63,7 +64,6 @@ public class VocabularyServiceImpl implements VocabularyService {
         Vocabulary vocabulary = new Vocabulary();
         vocabulary.setWord(request.getWord());
         vocabulary.setWordType(request.getWordType());
-        vocabulary.setDefinition(request.getDefinition());
         vocabulary.setSampleSentence(request.getSampleSentence());
         vocabulary.setImageUrl(imageUrl);
         vocabulary.setAudioUrl(request.getAudioUrl());
@@ -76,7 +76,7 @@ public class VocabularyServiceImpl implements VocabularyService {
 
     @Override
     @Transactional
-    public VocabularyResponse update(Long id, VocabularyRequest request, MultipartFile image) {
+    public VocabularyResponse update(UUID id, VocabularyRequest request, MultipartFile image) {
         Vocabulary vocabulary = vocabularyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vocabulary", "id", id));
 
@@ -93,7 +93,6 @@ public class VocabularyServiceImpl implements VocabularyService {
 
         vocabulary.setWord(request.getWord());
         vocabulary.setWordType(request.getWordType());
-        vocabulary.setDefinition(request.getDefinition());
         vocabulary.setSampleSentence(request.getSampleSentence());
         vocabulary.setAudioUrl(request.getAudioUrl());
         vocabulary.setUpdatedAt(Instant.now());
@@ -103,7 +102,7 @@ public class VocabularyServiceImpl implements VocabularyService {
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(UUID id) {
         if (!vocabularyRepository.existsById(id)) {
             throw new ResourceNotFoundException("Vocabulary", "id", id);
         }
@@ -123,7 +122,6 @@ public class VocabularyServiceImpl implements VocabularyService {
                 .id(v.getId())
                 .word(v.getWord())
                 .wordType(v.getWordType())
-                .definition(v.getDefinition())
                 .sampleSentence(v.getSampleSentence())
                 .imageUrl(v.getImageUrl())
                 .audioUrl(v.getAudioUrl())

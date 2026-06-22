@@ -5,14 +5,15 @@ import com.tuan.lla.dto.response.VocabularyResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface VocabularyService {
 
     List<VocabularyResponse> getAll();
 
-    List<VocabularyResponse> getAllByTopicId(Long topicId);
+    List<VocabularyResponse> getAllByTopicId(UUID topicId);
 
-    VocabularyResponse getById(Long id);
+    VocabularyResponse getById(UUID id);
 
     /**
      * Tạo từ vựng mới. Nếu {@code image} không null thì upload lên Cloudinary
@@ -24,7 +25,7 @@ public interface VocabularyService {
      * Cập nhật từ vựng. Nếu {@code image} không null thì upload ảnh mới
      * và thay thế URL cũ trong DB.
      */
-    VocabularyResponse update(Long id, VocabularyRequest request, MultipartFile image);
+    VocabularyResponse update(UUID id, VocabularyRequest request, MultipartFile image);
 
-    void delete(Long id);
+    void delete(UUID id);
 }

@@ -4,16 +4,17 @@ import com.tuan.lla.dto.request.UserRequest;
 import com.tuan.lla.dto.response.UserResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface UserService {
 
     List<UserResponse> getAll();
 
-    UserResponse getById(Long id);
+    UserResponse getById(UUID id);
 
     UserResponse create(UserRequest request);
 
-    UserResponse update(Long id, UserRequest request);
+    UserResponse update(UUID id, UserRequest request);
 
-    void delete(Long id);
+    void delete(UUID id);
 }

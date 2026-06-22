@@ -3,6 +3,7 @@ package com.tuan.lla.controller;
 import com.tuan.lla.dto.request.VocabularyRequest;
 import com.tuan.lla.dto.response.ApiResponse;
 import com.tuan.lla.dto.response.VocabularyResponse;
+import com.tuan.lla.service.CloudinaryService;
 import com.tuan.lla.service.VocabularyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/vocabularies")
@@ -27,12 +29,12 @@ public class VocabularyController {
     }
 
     @GetMapping("/topic/{topicId}")
-    public ResponseEntity<ApiResponse<List<VocabularyResponse>>> getAllByTopic(@PathVariable Long topicId) {
+    public ResponseEntity<ApiResponse<List<VocabularyResponse>>> getAllByTopic(@PathVariable UUID topicId) {
         return ResponseEntity.ok(ApiResponse.success(vocabularyService.getAllByTopicId(topicId)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<VocabularyResponse>> getById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<VocabularyResponse>> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(ApiResponse.success(vocabularyService.getById(id)));
     }
 
@@ -61,7 +63,7 @@ public class VocabularyController {
      */
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<VocabularyResponse>> update(
-            @PathVariable Long id,
+            @PathVariable UUID id,
             @RequestPart("data") @Valid VocabularyRequest request,
             @RequestPart(value = "image", required = false) MultipartFile image) {
 
@@ -70,7 +72,7 @@ public class VocabularyController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable UUID id) {
         vocabularyService.delete(id);
         return ResponseEntity.ok(ApiResponse.success("Vocabulary deleted successfully", null));
     }

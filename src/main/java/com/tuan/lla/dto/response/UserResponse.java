@@ -5,13 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Getter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResponse {
 
-    private Long id;
+    private UUID id;
     private String email;
     private String fullName;
     private String avatarUrl;

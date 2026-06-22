@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +33,7 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public List<TopicResponse> getAllByUserId(Long userId) {
+    public List<TopicResponse> getAllByUserId(UUID userId) {
         if (!userRepository.existsById(userId)) {
             throw new ResourceNotFoundException("User", "id", userId);
         }
@@ -43,7 +44,7 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public TopicResponse getById(Long id) {
+    public TopicResponse getById(UUID id) {
         Topic topic = topicRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Topic", "id", id));
         return toResponse(topic);
@@ -67,7 +68,7 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     @Transactional
-    public TopicResponse update(Long id, TopicRequest request) {
+    public TopicResponse update(UUID id, TopicRequest request) {
         Topic topic = topicRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Topic", "id", id));
 
@@ -86,7 +87,7 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(UUID id) {
         if (!topicRepository.existsById(id)) {
             throw new ResourceNotFoundException("Topic", "id", id);
         }
