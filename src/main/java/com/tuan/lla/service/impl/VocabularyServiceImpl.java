@@ -1,6 +1,8 @@
 package com.tuan.lla.service.impl;
 
+import com.tuan.lla.client.DictionaryClient;
 import com.tuan.lla.dto.request.VocabularyRequest;
+import com.tuan.lla.dto.response.ExternalDictionaryResponse;
 import com.tuan.lla.dto.response.VocabularyResponse;
 import com.tuan.lla.exception.ResourceNotFoundException;
 import com.tuan.lla.model.Topic;
@@ -12,20 +14,22 @@ import com.tuan.lla.service.VocabularyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class VocabularyServiceImpl implements VocabularyService {
-
     private final VocabularyRepository vocabularyRepository;
     private final TopicRepository topicRepository;
     private final CloudinaryService cloudinaryService;
+    private final DictionaryClient dictionaryClient;
 
     @Override
     public List<VocabularyResponse> getAll() {
@@ -54,10 +58,43 @@ public class VocabularyServiceImpl implements VocabularyService {
     }
 
     @Override
+    public VocabularyResponse searchByWord(String word) {
+        ExternalDictionaryResponse externalData = dictionaryClient.getWord(word);
+
+        String type = (externalData.pos() != null) ? String.join(" ,", externalData.pos()) : null;
+
+        String defText = (externalData.definition() != null && !externalData.definition().isEmpty())
+                ? externalData.definition().get(0).text() : null;
+
+        String audio = (externalData.pronunciation() != null && !externalData.pronunciation().isEmpty())
+                ? externalData.pronunciation().get(0).url() : null;
+
+        String sample = null;
+        if (externalData.definition() != null && !externalData.definition().isEmpty()) {
+            var examples = externalData.definition().get(0).example();
+            if (examples != null && !examples.isEmpty()) {
+                sample = examples.get(0).text();
+            }
+        }
+
+        return VocabularyResponse.builder()
+                .word(externalData.word())
+                .wordType(type)
+                .definition(defText)
+                .audioUrl(audio)
+                .sampleSentence(sample)
+                .build();
+    }
+
+    @Override
     @Transactional
     public VocabularyResponse create(VocabularyRequest request, MultipartFile image) {
-        Topic topic = topicRepository.findById(request.getTopicId())
-                .orElseThrow(() -> new ResourceNotFoundException("Topic", "id", request.getTopicId()));
+        Topic topic = null;
+
+        if (request.getTopicId() != null) {
+            topicRepository.findById(request.getTopicId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Topic", "id", request.getTopicId()));
+        }
 
         String imageUrl = hasFile(image) ? cloudinaryService.uploadImage(image) : null;
 

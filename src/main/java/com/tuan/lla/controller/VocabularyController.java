@@ -38,6 +38,11 @@ public class VocabularyController {
         return ResponseEntity.ok(ApiResponse.success(vocabularyService.getById(id)));
     }
 
+    @GetMapping("/find/{word}")
+    public ResponseEntity<ApiResponse<VocabularyResponse>> searchWord(@PathVariable String word) {
+        return ResponseEntity.ok(ApiResponse.success(vocabularyService.searchByWord(word)));
+    }
+
     /**
      * Tạo từ vựng mới kèm ảnh (tuỳ chọn).
      * Content-Type: multipart/form-data
@@ -48,7 +53,6 @@ public class VocabularyController {
     public ResponseEntity<ApiResponse<VocabularyResponse>> create(
             @RequestPart("data") @Valid VocabularyRequest request,
             @RequestPart(value = "image", required = false) MultipartFile image) {
-
         VocabularyResponse created = vocabularyService.create(request, image);
         return ResponseEntity
                 .status(HttpStatus.CREATED)

@@ -28,6 +28,5 @@ public class VocabularyRequest {
     // imageUrl không có ở đây — ảnh được upload qua MultipartFile, URL do server tự set
     private String audioUrl;
 
-    @NotNull(message = "Topic ID is required")
     private UUID topicId;
 }

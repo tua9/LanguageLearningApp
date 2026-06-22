@@ -43,7 +43,7 @@ public class Vocabulary {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
-    @JoinColumn(name = "topic_id")
+    @JoinColumn(name = "topic_id", nullable = true)
     private Topic topic;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
