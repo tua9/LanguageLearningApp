@@ -1,0 +1,2 @@
+ALTER TABLE vocabularies
+ADD COLUMN meaning VARCHAR(128);
