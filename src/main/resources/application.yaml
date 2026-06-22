@@ -1,0 +1,21 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: LanguageLearningApp
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/language-learning
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:22194}
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
