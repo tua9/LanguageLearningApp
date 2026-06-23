@@ -8,6 +8,10 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+<<<<<<< HEAD
+=======
+import java.util.UUID;
+>>>>>>> dev
 
 @Getter
 @Setter
@@ -17,7 +21,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+<<<<<<< HEAD
     private Long id;
+=======
+    private UUID id;
+>>>>>>> dev
 
     @Size(max = 100)
     @NotNull

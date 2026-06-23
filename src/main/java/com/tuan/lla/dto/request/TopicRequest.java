@@ -6,6 +6,11 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+<<<<<<< HEAD
+=======
+import java.util.UUID;
+
+>>>>>>> dev
 @Getter
 @Setter
 public class TopicRequest {
@@ -18,5 +23,9 @@ public class TopicRequest {
     private String description;
 
     @NotNull(message = "User ID is required")
+<<<<<<< HEAD
     private Long userId;
+=======
+    private UUID userId;
+>>>>>>> dev
 }

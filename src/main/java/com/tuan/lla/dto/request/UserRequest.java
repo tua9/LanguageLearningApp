@@ -7,6 +7,11 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+<<<<<<< HEAD
+=======
+import java.util.UUID;
+
+>>>>>>> dev
 @Getter
 @Setter
 public class UserRequest {
@@ -32,5 +37,9 @@ public class UserRequest {
     private String providerId;
 
     @NotNull(message = "RoleID is required")
+<<<<<<< HEAD
     private Integer roleId;
+=======
+    private UUID roleId;
+>>>>>>> dev
 }

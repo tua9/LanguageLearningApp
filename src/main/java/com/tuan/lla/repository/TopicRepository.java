@@ -5,9 +5,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+<<<<<<< HEAD
 
 @Repository
 public interface TopicRepository extends JpaRepository<Topic, Long> {
 
     List<Topic> findAllByUserId(Long userId);
+=======
+import java.util.UUID;
+
+@Repository
+public interface TopicRepository extends JpaRepository<Topic, UUID> {
+
+    List<Topic> findAllByUserId(UUID userId);
+>>>>>>> dev
 }

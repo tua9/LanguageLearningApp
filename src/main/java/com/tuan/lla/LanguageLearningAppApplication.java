@@ -2,8 +2,15 @@ package com.tuan.lla;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+<<<<<<< HEAD
 
 @SpringBootApplication
+=======
+import org.springframework.cloud.openfeign.EnableFeignClients;
+
+@SpringBootApplication
+@EnableFeignClients
+>>>>>>> dev
 public class LanguageLearningAppApplication {
 
     public static void main(String[] args) {

@@ -11,6 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+<<<<<<< HEAD
+=======
+import java.util.UUID;
+>>>>>>> dev
 
 @RestController
 @RequestMapping("/api/v1/topics")
@@ -25,12 +29,20 @@ public class TopicController {
     }
 
     @GetMapping("/user/{userId}")
+<<<<<<< HEAD
     public ResponseEntity<ApiResponse<List<TopicResponse>>> getAllByUser(@PathVariable Long userId) {
+=======
+    public ResponseEntity<ApiResponse<List<TopicResponse>>> getAllByUser(@PathVariable UUID userId) {
+>>>>>>> dev
         return ResponseEntity.ok(ApiResponse.success(topicService.getAllByUserId(userId)));
     }
 
     @GetMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<ApiResponse<TopicResponse>> getById(@PathVariable Long id) {
+=======
+    public ResponseEntity<ApiResponse<TopicResponse>> getById(@PathVariable UUID id) {
+>>>>>>> dev
         return ResponseEntity.ok(ApiResponse.success(topicService.getById(id)));
     }
 
@@ -44,13 +56,21 @@ public class TopicController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<TopicResponse>> update(
+<<<<<<< HEAD
             @PathVariable Long id,
+=======
+            @PathVariable UUID id,
+>>>>>>> dev
             @Valid @RequestBody TopicRequest request) {
         return ResponseEntity.ok(ApiResponse.success("Topic updated successfully", topicService.update(id, request)));
     }
 
     @DeleteMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
+=======
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable UUID id) {
+>>>>>>> dev
         topicService.delete(id);
         return ResponseEntity.ok(ApiResponse.success("Topic deleted successfully", null));
     }

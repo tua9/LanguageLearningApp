@@ -14,6 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
+<<<<<<< HEAD
+=======
+import java.util.UUID;
+>>>>>>> dev
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +36,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+<<<<<<< HEAD
     public UserResponse getById(Long id) {
+=======
+    public UserResponse getById(UUID id) {
+>>>>>>> dev
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         return toResponse(user);
@@ -60,7 +68,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+<<<<<<< HEAD
     public UserResponse update(Long id, UserRequest request) {
+=======
+    public UserResponse update(UUID id, UserRequest request) {
+>>>>>>> dev
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 
@@ -85,7 +97,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+<<<<<<< HEAD
     public void delete(Long id) {
+=======
+    public void delete(UUID id) {
+>>>>>>> dev
         if (!userRepository.existsById(id)) {
             throw new ResourceNotFoundException("User", "id", id);
         }

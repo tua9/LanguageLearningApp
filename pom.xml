@@ -28,7 +28,23 @@
     </scm>
     <properties>
         <java.version>21</java.version>
+<<<<<<< HEAD
     </properties>
+=======
+        <spring-cloud.version>2025.1.2</spring-cloud.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+>>>>>>> dev
     <dependencies>
         <dependency>
             <groupId>com.cloudinary</groupId>
@@ -96,6 +112,13 @@
             <artifactId>spring-boot-starter-webmvc-test</artifactId>
             <scope>test</scope>
         </dependency>
+<<<<<<< HEAD
+=======
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+>>>>>>> dev
     </dependencies>
 
     <build>

@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+<<<<<<< HEAD
+=======
+import java.util.UUID;
+>>>>>>> dev
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +32,11 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+<<<<<<< HEAD
     public RoleResponse getById(Integer id) {
+=======
+    public RoleResponse getById(UUID id) {
+>>>>>>> dev
         Role role = roleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Role", "id", id));
         return toResponse(role);
@@ -44,7 +52,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
+<<<<<<< HEAD
     public RoleResponse update(Integer id, RoleRequest request) {
+=======
+    public RoleResponse update(UUID id, RoleRequest request) {
+>>>>>>> dev
         Role role = roleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Role", "id", id));
         role.setName(request.getName());
@@ -53,7 +65,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
+<<<<<<< HEAD
     public void delete(Integer id) {
+=======
+    public void delete(UUID id) {
+>>>>>>> dev
         if (!roleRepository.existsById(id)) {
             throw new ResourceNotFoundException("Role", "id", id);
         }
