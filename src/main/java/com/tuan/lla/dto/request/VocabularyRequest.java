@@ -24,9 +24,7 @@ public class VocabularyRequest {
     private String definition;
 
     private String sampleSentence;
-
-    // imageUrl không có ở đây — ảnh được upload qua MultipartFile, URL do server tự set
+    private String pronunciation;
     private String audioUrl;
-
     private UUID topicId;
 }

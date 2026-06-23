@@ -17,16 +17,8 @@ public interface VocabularyService {
 
     VocabularyResponse searchByWord(String word);
 
-    /**
-     * Tạo từ vựng mới. Nếu {@code image} không null thì upload lên Cloudinary
-     * và lưu URL vào DB.
-     */
     VocabularyResponse create(VocabularyRequest request, MultipartFile image);
 
-    /**
-     * Cập nhật từ vựng. Nếu {@code image} không null thì upload ảnh mới
-     * và thay thế URL cũ trong DB.
-     */
     VocabularyResponse update(UUID id, VocabularyRequest request, MultipartFile image);
 
     void delete(UUID id);

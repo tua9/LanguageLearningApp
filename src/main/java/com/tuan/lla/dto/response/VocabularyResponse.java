@@ -21,6 +21,8 @@ public class VocabularyResponse {
     private String wordType;
     private String definition;
     private String sampleSentence;
+    private String meaning;
+    private String pronunciation;
     private String imageUrl;
     private String audioUrl;
     private UUID topicId;

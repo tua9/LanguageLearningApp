@@ -14,12 +14,17 @@ import com.tuan.lla.service.VocabularyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestClient;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -61,7 +66,7 @@ public class VocabularyServiceImpl implements VocabularyService {
     public VocabularyResponse searchByWord(String word) {
         ExternalDictionaryResponse externalData = dictionaryClient.getWord(word);
 
-        String type = (externalData.pos() != null) ? String.join(" ,", externalData.pos()) : null;
+        String type = (externalData.pos() != null) ? externalData.pos().get(0) : null;
 
         String defText = (externalData.definition() != null && !externalData.definition().isEmpty())
                 ? externalData.definition().get(0).text() : null;
@@ -77,10 +82,13 @@ public class VocabularyServiceImpl implements VocabularyService {
             }
         }
 
+        String pronunciation = externalData.pronunciation().getFirst().pron();
+
         return VocabularyResponse.builder()
                 .word(externalData.word())
                 .wordType(type)
                 .definition(defText)
+                .pronunciation(pronunciation)
                 .audioUrl(audio)
                 .sampleSentence(sample)
                 .build();
@@ -92,7 +100,7 @@ public class VocabularyServiceImpl implements VocabularyService {
         Topic topic = null;
 
         if (request.getTopicId() != null) {
-            topicRepository.findById(request.getTopicId())
+            topic = topicRepository.findById(request.getTopicId())
                     .orElseThrow(() -> new ResourceNotFoundException("Topic", "id", request.getTopicId()));
         }
 
@@ -101,6 +109,8 @@ public class VocabularyServiceImpl implements VocabularyService {
         Vocabulary vocabulary = new Vocabulary();
         vocabulary.setWord(request.getWord());
         vocabulary.setWordType(request.getWordType());
+        vocabulary.setMeaning(translate(request.getWord()));
+        vocabulary.setPronunciation(request.getPronunciation());
         vocabulary.setSampleSentence(request.getSampleSentence());
         vocabulary.setImageUrl(imageUrl);
         vocabulary.setAudioUrl(request.getAudioUrl());
@@ -123,7 +133,6 @@ public class VocabularyServiceImpl implements VocabularyService {
             vocabulary.setTopic(topic);
         }
 
-        // Chỉ thay ảnh khi client gửi file mới, giữ nguyên URL cũ nếu không có ảnh
         if (hasFile(image)) {
             vocabulary.setImageUrl(cloudinaryService.uploadImage(image));
         }
@@ -152,6 +161,33 @@ public class VocabularyServiceImpl implements VocabularyService {
         return file != null && !file.isEmpty();
     }
 
+    private String translate(String str) {
+
+        String textToTranslate = str;
+
+        String encodedText = URLEncoder.encode(textToTranslate, StandardCharsets.UTF_8);
+
+        String urlString = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=" + encodedText;
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(urlString))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        String responseBody = response.body();
+        String translatedText = responseBody.substring(responseBody.indexOf("\"") + 1, responseBody.indexOf("\","));
+
+        return translatedText;
+    }
+
     // ────────── mapper ──────────
 
     private VocabularyResponse toResponse(Vocabulary v) {
@@ -160,6 +196,8 @@ public class VocabularyServiceImpl implements VocabularyService {
                 .word(v.getWord())
                 .wordType(v.getWordType())
                 .sampleSentence(v.getSampleSentence())
+                .meaning(v.getMeaning())
+                .pronunciation(v.getPronunciation())
                 .imageUrl(v.getImageUrl())
                 .audioUrl(v.getAudioUrl())
                 .topicId(v.getTopic() != null ? v.getTopic().getId() : null)
