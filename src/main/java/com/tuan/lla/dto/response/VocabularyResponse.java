@@ -1,6 +1,19 @@
 package com.tuan.lla.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+<<<<<<< HEAD
+import lombok.Builder;
+import lombok.Getter;
+
+import java.time.Instant;
+
+@Getter
+@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class VocabularyResponse {
+
+    private Long id;
+=======
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +30,7 @@ import java.util.UUID;
 public class VocabularyResponse {
 
     private UUID id;
+>>>>>>> dev
     private String word;
     private String wordType;
     private String definition;
@@ -25,7 +39,11 @@ public class VocabularyResponse {
     private String pronunciation;
     private String imageUrl;
     private String audioUrl;
+<<<<<<< HEAD
+    private Long topicId;
+=======
     private UUID topicId;
+>>>>>>> dev
     private String topicTitle;
     private Instant createdAt;
     private Instant updatedAt;

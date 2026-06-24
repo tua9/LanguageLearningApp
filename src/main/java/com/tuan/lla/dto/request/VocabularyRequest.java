@@ -26,5 +26,6 @@ public class VocabularyRequest {
     private String sampleSentence;
     private String pronunciation;
     private String audioUrl;
+
     private UUID topicId;
 }

@@ -3,7 +3,10 @@ package com.tuan.lla.controller;
 import com.tuan.lla.dto.request.VocabularyRequest;
 import com.tuan.lla.dto.response.ApiResponse;
 import com.tuan.lla.dto.response.VocabularyResponse;
+<<<<<<< HEAD
+=======
 import com.tuan.lla.service.CloudinaryService;
+>>>>>>> dev
 import com.tuan.lla.service.VocabularyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+<<<<<<< HEAD
+=======
 import java.util.UUID;
+>>>>>>> dev
 
 @RestController
 @RequestMapping("/api/v1/vocabularies")
@@ -29,11 +35,25 @@ public class VocabularyController {
     }
 
     @GetMapping("/topic/{topicId}")
+<<<<<<< HEAD
+    public ResponseEntity<ApiResponse<List<VocabularyResponse>>> getAllByTopic(@PathVariable Long topicId) {
+=======
     public ResponseEntity<ApiResponse<List<VocabularyResponse>>> getAllByTopic(@PathVariable UUID topicId) {
+>>>>>>> dev
         return ResponseEntity.ok(ApiResponse.success(vocabularyService.getAllByTopicId(topicId)));
     }
 
     @GetMapping("/{id}")
+<<<<<<< HEAD
+    public ResponseEntity<ApiResponse<VocabularyResponse>> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(vocabularyService.getById(id)));
+    }
+
+    /**
+     * Tạo từ vựng mới kèm ảnh (tuỳ chọn).
+     * Content-Type: multipart/form-data
+     * - Part "data" : JSON VocabularyRequest
+=======
     public ResponseEntity<ApiResponse<VocabularyResponse>> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(ApiResponse.success(vocabularyService.getById(id)));
     }
@@ -47,12 +67,17 @@ public class VocabularyController {
      * Tạo từ vựng mới kèm ảnh (tuỳ chọn).
      * Content-Type: multipart/form-data
      * - Part "data"  : JSON VocabularyRequest
+>>>>>>> dev
      * - Part "image" : file ảnh (optional)
      */
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<VocabularyResponse>> create(
             @RequestPart("data") @Valid VocabularyRequest request,
             @RequestPart(value = "image", required = false) MultipartFile image) {
+<<<<<<< HEAD
+
+=======
+>>>>>>> dev
         VocabularyResponse created = vocabularyService.create(request, image);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -60,23 +85,43 @@ public class VocabularyController {
     }
 
     /**
+<<<<<<< HEAD
+     * Cập nhật từ vựng. Gửi file "image" mới nếu muốn thay ảnh, bỏ qua nếu không
+     * cần đổi.
+     * Content-Type: multipart/form-data
+     * - Part "data" : JSON VocabularyRequest
+=======
      * Cập nhật từ vựng. Gửi file "image" mới nếu muốn thay ảnh, bỏ qua nếu không cần đổi.
      * Content-Type: multipart/form-data
      * - Part "data"  : JSON VocabularyRequest
+>>>>>>> dev
      * - Part "image" : file ảnh mới (optional)
      */
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<VocabularyResponse>> update(
+<<<<<<< HEAD
+            @PathVariable Long id,
+=======
             @PathVariable UUID id,
+>>>>>>> dev
             @RequestPart("data") @Valid VocabularyRequest request,
             @RequestPart(value = "image", required = false) MultipartFile image) {
 
         return ResponseEntity
+<<<<<<< HEAD
+                .ok(ApiResponse.success("Vocabulary updated successfully",
+                        vocabularyService.update(id, request, image)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
+=======
                 .ok(ApiResponse.success("Vocabulary updated successfully", vocabularyService.update(id, request, image)));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable UUID id) {
+>>>>>>> dev
         vocabularyService.delete(id);
         return ResponseEntity.ok(ApiResponse.success("Vocabulary deleted successfully", null));
     }

@@ -21,6 +21,7 @@ import java.util.UUID;
         "updatedAt"
 })
 public class UserResponse {
+
     private UUID id;
     private String email;
     private String fullName;

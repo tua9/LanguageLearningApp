@@ -10,7 +10,10 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.Instant;
+<<<<<<< HEAD
+=======
 import java.util.UUID;
+>>>>>>> dev
 
 @Getter
 @Setter
@@ -20,7 +23,11 @@ public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+<<<<<<< HEAD
+    private Long id;
+=======
     private UUID id;
+>>>>>>> dev
 
     @Size(max = 100)
     @NotNull

@@ -14,7 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
+<<<<<<< HEAD
+=======
 import java.util.UUID;
+>>>>>>> dev
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +36,11 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
+<<<<<<< HEAD
+    public List<TopicResponse> getAllByUserId(Long userId) {
+=======
     public List<TopicResponse> getAllByUserId(UUID userId) {
+>>>>>>> dev
         if (!userRepository.existsById(userId)) {
             throw new ResourceNotFoundException("User", "id", userId);
         }
@@ -44,7 +51,11 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
+<<<<<<< HEAD
+    public TopicResponse getById(Long id) {
+=======
     public TopicResponse getById(UUID id) {
+>>>>>>> dev
         Topic topic = topicRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Topic", "id", id));
         return toResponse(topic);
@@ -68,7 +79,11 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     @Transactional
+<<<<<<< HEAD
+    public TopicResponse update(Long id, TopicRequest request) {
+=======
     public TopicResponse update(UUID id, TopicRequest request) {
+>>>>>>> dev
         Topic topic = topicRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Topic", "id", id));
 
@@ -87,7 +102,11 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     @Transactional
+<<<<<<< HEAD
+    public void delete(Long id) {
+=======
     public void delete(UUID id) {
+>>>>>>> dev
         if (!topicRepository.existsById(id)) {
             throw new ResourceNotFoundException("Topic", "id", id);
         }

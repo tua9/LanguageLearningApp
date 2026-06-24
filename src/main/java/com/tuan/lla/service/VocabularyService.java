@@ -20,7 +20,6 @@ public interface VocabularyService {
     VocabularyResponse create(VocabularyRequest request, MultipartFile image);
 
     VocabularyResponse update(UUID id, VocabularyRequest request, MultipartFile image);
-
     void delete(UUID id);
 
 }

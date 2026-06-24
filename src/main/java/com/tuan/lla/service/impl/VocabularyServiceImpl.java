@@ -14,6 +14,7 @@ import com.tuan.lla.service.VocabularyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -109,8 +111,6 @@ public class VocabularyServiceImpl implements VocabularyService {
         Vocabulary vocabulary = new Vocabulary();
         vocabulary.setWord(request.getWord());
         vocabulary.setWordType(request.getWordType());
-        vocabulary.setMeaning(translate(request.getWord()));
-        vocabulary.setPronunciation(request.getPronunciation());
         vocabulary.setSampleSentence(request.getSampleSentence());
         vocabulary.setImageUrl(imageUrl);
         vocabulary.setAudioUrl(request.getAudioUrl());

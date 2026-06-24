@@ -61,8 +61,4 @@ public class Vocabulary {
     @Size(max = 255)
     @Column(name = "pronunciation")
     private String pronunciation;
-
-    @Size(max = 128)
-    @Column(name = "meaning")
-    private String meaning;
 }

@@ -6,8 +6,11 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+<<<<<<< HEAD
+=======
 import java.util.UUID;
 
+>>>>>>> dev
 @Getter
 @Setter
 @Entity
@@ -16,12 +19,19 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+<<<<<<< HEAD
+    private Integer id;
+=======
     private UUID id;
+>>>>>>> dev
 
     @Size(max = 20)
     @NotNull
     @Column(name = "name", nullable = false, length = 20)
     private String name;
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> dev
 }
